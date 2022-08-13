@@ -7,8 +7,7 @@ function cleanText(str: string, remove_word: string) {
     return str;
 }
 
-
-const main = () => {
+const getFirstResult = () => {
     
     var data = fs.readFileSync('./inputs/day-2.txt').toString().split("\n");
 
@@ -37,7 +36,44 @@ const main = () => {
     return horizontal_position * vertical_position
 }
 
-const final_position = main()
+const getSecondResult = () => {
+    
+    var data = fs.readFileSync('./inputs/day-2.txt').toString().split("\n");
 
-console.log(final_position)
+    let horizontal_position: number = 0;
+    let aim: number = 0;
+    let depth: number = 0;
 
+    for (let i in data) {
+        let index = parseInt(i)
+        let str = data[index]
+
+        if (str.includes("forward")) {
+            str = cleanText(str, "forward");
+            let instruction_number: number  = parseInt(str)
+            horizontal_position += instruction_number
+            depth += instruction_number*aim
+        };
+
+        if (str.includes("down")) {
+            str = cleanText(str, "down");
+            let instruction_number: number  = parseInt(str)
+            aim += instruction_number
+        };
+
+        if (str.includes("up")) {
+            str = cleanText(str, "up");
+            let instruction_number: number  = parseInt(str)
+            aim -= instruction_number
+        };
+    };
+    return horizontal_position * depth
+}
+
+const main = () => {
+    console.log(getFirstResult())
+    console.log(getSecondResult())
+
+}
+
+main()
