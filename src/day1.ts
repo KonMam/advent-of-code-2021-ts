@@ -1,6 +1,5 @@
 import fs from 'fs'
 
-
 const readFileIntoArray = () => {
 
     const depth: number[] = []
@@ -13,7 +12,6 @@ const readFileIntoArray = () => {
 
     return depth
 }
-
 
 const getChangeStatusArray = (depth: number[]) => {
     const status: string[] = []
@@ -35,14 +33,6 @@ const getChangeStatusArray = (depth: number[]) => {
     return status
 }
 
-
-const depth = readFileIntoArray()
-const depth_status = getChangeStatusArray(depth)
-
-const depth_increases_count = depth_status.filter(element => element == 'increased')
-
-console.log(depth_increases_count.length)
-
 const getSlidingWindowArray = (array: number[]) => {
     const sliding_window: number[] = []
     for (let i in array) {
@@ -54,9 +44,30 @@ const getSlidingWindowArray = (array: number[]) => {
     return sliding_window
 }
 
-const sliding_window = getSlidingWindowArray(depth)
-const sliding_window_status = getChangeStatusArray(sliding_window)
 
-const sliding_increases_count =  sliding_window_status.filter(element => element == 'increased')
+const getFirstResult = (depth: number[]) => {
+    const depth_status = getChangeStatusArray(depth)
 
-console.log(sliding_increases_count.length)
+    const depth_increases_count = depth_status.filter(element => element == 'increased')
+
+    return depth_increases_count.length
+}
+
+const getSecondResult = (depth: number[]) => {
+    const sliding_window = getSlidingWindowArray(depth)
+    const sliding_window_status = getChangeStatusArray(sliding_window)
+
+    const sliding_increases_count =  sliding_window_status.filter(element => element == 'increased')
+
+    return sliding_increases_count.length
+
+}
+
+const main = () => {    
+    const depth = readFileIntoArray()
+
+    console.log(getFirstResult(depth))
+    console.log(getSecondResult(depth))
+}
+
+main()
