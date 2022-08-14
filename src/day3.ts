@@ -7,7 +7,7 @@ const getInput = () => {
     var data = fs.readFileSync('./inputs/day-3.txt').toString().split("\n");
 
     for (let i in data) {
-        result.push(data[parseInt(i)])
+        result.push(data[parseInt(i)].replace("\r", ""))
     };
 
     return result
@@ -81,7 +81,78 @@ const getFirstResult = (data: string[]) => {
 }
 
 
-const binary_data = getInput()
+const getSecondResult = () => {
 
-getFirstResult(binary_data)
+    let i = 0
+    let data = getInput()
+
+    while ( i < 12 ) {
+        let elements: number[] = []
+
+        let zeros_array: number[] = []
+        let ones_array: number[] = []
+
+        for (let element of data) {
+            let digit = parseInt(element[i])
+            elements.push(digit)
+        }
+
+        zeros_array = elements.filter(value => value === 0)
+        ones_array = elements.filter(value => value === 1)
+
+        if(zeros_array.length < ones_array.length) {
+            data = data.filter(value => value.at(i) !== "0")
+        } 
+        if (zeros_array.length === ones_array.length) {
+            data = data.filter(value => value.at(i) !== "0")
+        }
+        if (zeros_array.length > ones_array.length) {
+            data = data.filter(value => value.at(i) !== "1")
+        }
+
+        i += 1
+    }
+
+    let oxygen_generator_rating = parseInt(data[0], 2)
+    console.log("Oxygen Generator Rating: ", oxygen_generator_rating)
+
+    i = 0
+    data = getInput()
+
+    while ( i < 12 ) {
+        let elements: number[] = []
+
+        let zeros_array: number[] = []
+        let ones_array: number[] = []
+
+        for (let element of data) {
+            let digit = parseInt(element[i])
+            elements.push(digit)
+        }
+
+        zeros_array = elements.filter(value => value === 0)
+        ones_array = elements.filter(value => value === 1)
+
+        if ((zeros_array.length < ones_array.length) && (data.length > 1)) {
+            data = data.filter(value => value.at(i) === "0")
+        } 
+        if ((zeros_array.length === ones_array.length )&& (data.length > 1)) {
+            data = data.filter(value => value.at(i) === "0")
+        }
+        if ((zeros_array.length > ones_array.length) && (data.length > 1)) {
+            data = data.filter(value => value.at(i) === "1")
+        }
+
+        i += 1
+    }
+
+    let co2_scrubber_rating = parseInt(data[0], 2)
+    let life_support = oxygen_generator_rating * co2_scrubber_rating;
+
+    console.log("CO2 Scrubber Rating: ", co2_scrubber_rating)
+    console.log('Life Support: ', life_support)
+
+}
+
+getSecondResult()
 
