@@ -2,9 +2,9 @@ import fs from 'fs'
 
 const getInput = () => {
 
-    var result: string[] = [];
+    let result: string[] = [];
 
-    var data = fs.readFileSync('./inputs/day-3.txt').toString().split("\n");
+    let data = fs.readFileSync('./inputs/day-3.txt').toString().split("\n");
 
     for (let i in data) {
         result.push(data[parseInt(i)].replace("\r", ""))
